@@ -16,7 +16,11 @@ db.init_users();
 // for(i = 0; i < 1000; i++){
 //   db.temp_data();
 // }
-db.temp_data();
+for(i = 1; i < 500; i++){
+  db.temp_order(i);
+}
+// db.temp_data();
+// db.temp_order(10);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

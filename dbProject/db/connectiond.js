@@ -10,6 +10,28 @@ var rootConnection = mysql.createConnection({
   function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
+  function getbanckaccbyid(id){
+    var qury = "SELECT * from bank_accounts where user_id = "+ id + ";";
+    var val = 0;
+    rootConnection.query( qury, function (err, result) {
+      if (err) throw err;      
+      val =  result[0].account_id;
+      return val;
+    });
+    
+    // setTimeout(function(){return val},1); 
+  }
+  function getItembyId(itemid){
+    var quary = "SELECT * from items where item_id = "+ itemid +";";
+    var val = 0;
+    rootConnection.query( quary, function (err, result) {
+      if (err) throw err;
+      console.log(qury + " result "+result);
+      val =  result[0];
+    });
+    return val;
+    // setTimeout(function(){return val},0); 
+  }
  module.exports = {
   init_tabales(){
     rootConnection.connect(function(err) {
@@ -114,9 +136,89 @@ var rootConnection = mysql.createConnection({
           if (err) throw err;
           console.log("add password  account");
         }); 
+        if(user_type == 1){
+          var temp = getRandomInt(10);
+          for(i = 0; i <= temp; i++){
+            var available_quntity = getRandomInt(100);
+            var unit_price = getRandomInt(10000);
+            var item_name = randomstring.generate(5);
+            var discription = randomstring.generate(150);
+            var itemq = "INSERT INTO items(item_name, discription, seller_id, add_date, exp_date ,available_quntity, unit_price) VALUES ('"
+              + item_name + "','" 
+              + discription + "'," 
+              + user_id + "," 
+              + "NOW()," 
+              + "NOW() + INTERVAL 1 YEAR," 
+              + available_quntity + "," 
+              + unit_price
+              +");";
+              rootConnection.query( itemq, function (err, result) {
+                if (err) throw err;
+                console.log("add item");
+              }); 
+
+          }
+        }
       });
     }); 
 
+  },
+  temp_order(itemid){
+    var item = [];
+    var quary = "SELECT * from items where item_id = "+ itemid +";";
+    var val = 0;
+    rootConnection.query( quary, function (err, result) {
+      if (err) throw err;
+      item =  result[0];
+      var seller_id = item.seller_id;
+      var temp = "SELECT * from buyers where buyer_id > "+ getRandomInt(1000);
+      rootConnection.query( temp, function (err, result) {
+        if (err) throw err;
+        buyer_id = result[0].buyer_id;
+        var seller_bank_id = "";
+        var buyer_bank_id = "";
+        var quntity = 0;
+        var up = 0;
+        seller_id = item.seller_id;
+        up= item.unit_price;
+        quntity = getRandomInt(item.available_quntity);
+        var qury = "SELECT * from bank_accounts where user_id = "+ seller_id + ";";
+        rootConnection.query( qury, function (err, result) {
+          if (err) throw err;      
+          seller_bank_id =  result[0].account_id;
+          qury = "SELECT * from bank_accounts where user_id = "+ buyer_id + ";";
+          rootConnection.query( qury, function (err, result) {
+            if (err) throw err;      
+            buyer_bank_id =  result[0].account_id;
+            var discription = randomstring.generate(100);
+            var delivery_address = randomstring.generate(50);
+            var quary1 = "INSERT INTO orders (discription, delivery_address, seller_id, seller_bank_id, buyer_id, buyer_bank_id, item_id, quntity, totle_amount, create_date, compleate_date, order_status) VALUES ('"
+            + discription + "', '"
+            + delivery_address + "', "
+            + seller_id + ", "
+            + seller_bank_id + ", "
+            + buyer_id + ", "
+            + buyer_bank_id + ", "
+            + itemid + ", "
+            + quntity +", "
+            + (up*quntity) + ", "
+            + "NOW(), "
+            + "NOW() + INTERVAL 1 YEAR,"
+            + "1"
+            +");";
+            console.log(quary1);
+            rootConnection.query( quary1, function (err, result) {
+              if (err) throw err;
+              console.log("add new arder...");
+            }); 
+            });
+        });
+      }); 
+
+
+      
+    });
+    
   }
  } 
  

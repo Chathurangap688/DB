@@ -53,7 +53,7 @@ exports.bankAccounts = "CREATE TABLE if not exists "
 
 exports.orders = "CREATE TABLE if not exists "
     + " orders " 
-    + " (order_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " (order_id int(11) NOT NULL auto_increment PRIMARY KEY,"
     + " discription VARCHAR(500),"
     + " delivery_address VARCHAR(500),"
     + " seller_id int(11),"
