@@ -10,11 +10,64 @@ exports.userTable = "CREATE TABLE if not exists "
     + " last_name VARCHAR(100),"
     + " user_type int(2)); ";
 
-    exports.loginProfile = "CREATE TABLE if not exists "
+exports.loginProfile = "CREATE TABLE if not exists "
     + " login_frofile " 
     + " (user_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
-    + " user_name VARCHAR(50) UNIQUE,"
+    + " user_name VARCHAR(50),"
     + " password VARCHAR(50),"
     + " session_id VARCHAR(100),"
     + " last_update DATETIME,"
-    + " user_status int(2)); ";
+    + " user_status int(2),"
+    + " FOREIGN KEY (user_name) REFERENCES user(user_name),"
+    + " FOREIGN KEY (user_id) REFERENCES user(user_id));";
+
+exports.sellers = "CREATE TABLE if not exists "
+    + " sellers " 
+    + " (seller_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " FOREIGN KEY (seller_id) REFERENCES user(user_id));";
+
+exports.buyers = "CREATE TABLE if not exists "
+    + " buyers " 
+    + " (buyer_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " FOREIGN KEY (buyer_id) REFERENCES user(user_id));";
+
+exports.items = "CREATE TABLE if not exists "
+    + " items " 
+    + " (item_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " item_name VARCHAR(50),"
+    + " discription VARCHAR(500),"
+    + " seller_id int(11),"
+    + " add_date DATETIME,"
+    + " exp_date DATETIME,"
+    + " available_quntity DECIMAL(10,2),"
+    + " unit_price DECIMAL(10,2),"
+    + " FOREIGN KEY (seller_id) REFERENCES sellers(seller_id)); ";
+
+exports.bankAccounts = "CREATE TABLE if not exists "
+    + " bank_accounts " 
+    + " (accountm_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " user_id int(11),"
+    + " balance DECIMAL(10,2),"
+    + " FOREIGN KEY (user_id) REFERENCES user(user_id)); ";
+
+
+exports.orders = "CREATE TABLE if not exists "
+    + " orders " 
+    + " (order_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " discription VARCHAR(500),"
+    + " delivery_address VARCHAR(500),"
+    + " seller_id int(11),"
+    + " seller_bank_id int(11),"
+    + " buyer_id int(11),"
+    + " buyer_bank_id int(11),"
+    + " item_id int(11),"
+    + " quntity DECIMAL(10,2),"
+    + " totle_amount DECIMAL(10,2),"
+    + " create_date DATETIME,"
+    + " compleate_date DATETIME,"
+    + " order_status int(2), "
+    + " FOREIGN KEY (seller_id) REFERENCES sellers(seller_id), "
+    + " FOREIGN KEY (buyer_id) REFERENCES buyers(buyer_id), "
+    + " FOREIGN KEY (seller_bank_id) REFERENCES bank_accounts(accountm_id), "
+    + " FOREIGN KEY (buyer_bank_id) REFERENCES bank_accounts(accountm_id), "
+    + " FOREIGN KEY (item_id) REFERENCES items(item_id)); "

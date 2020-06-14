@@ -20,6 +20,32 @@ var rootConnection = mysql.createConnection({
         if (err) throw err;
         console.log("loginProfile Table created");
       }); 
+
+      rootConnection.query( create_tables.sellers, function (err, result) {
+        if (err) throw err;
+        console.log("sellers Table created");
+      }); 
+
+      rootConnection.query( create_tables.buyers, function (err, result) {
+        if (err) throw err;
+        console.log("buyers Table created");
+      }); 
+
+      rootConnection.query( create_tables.items, function (err, result) {
+        if (err) throw err;
+        console.log("items Table created");
+      }); 
+
+      rootConnection.query( create_tables.bankAccounts, function (err, result) {
+        if (err) throw err;
+        console.log("bankAccounts Table created");
+      }); 
+
+      rootConnection.query( create_tables.orders, function (err, result) {
+        if (err) throw err;
+        console.log("orders Table created");
+      }); 
+
     }); 
   },
   init_users(){
