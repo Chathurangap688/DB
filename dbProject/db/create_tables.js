@@ -1,0 +1,20 @@
+exports.userTable = "CREATE TABLE if not exists "
+    + "user " 
+    + "(user_id int(11) NOT NULL auto_increment PRIMARY KEY,"
+    + " user_name VARCHAR(50) UNIQUE,"
+    + " address VARCHAR(100),"
+    + " age int(3), "
+    + " contact_number VARCHAR(15),"
+    + " country VARCHAR(25), "
+    + " first_name VARCHAR(100),"
+    + " last_name VARCHAR(100),"
+    + " user_type int(2)); ";
+
+    exports.loginProfile = "CREATE TABLE if not exists "
+    + " login_frofile " 
+    + " (user_id int(11) NOT NULL UNIQUE PRIMARY KEY,"
+    + " user_name VARCHAR(50) UNIQUE,"
+    + " password VARCHAR(50),"
+    + " session_id VARCHAR(100),"
+    + " last_update DATETIME,"
+    + " user_status int(2)); ";
