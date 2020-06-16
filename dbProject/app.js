@@ -11,14 +11,14 @@ var usersRouter = require('./routes/users');
 
 
 var app = express();
-db.init_tabales();
-db.init_users();
+// db.init_tabales();
+// db.init_users();
 // for(i = 0; i < 1000; i++){
 //   db.temp_data();
 // }
-for(i = 1; i < 500; i++){
-  db.temp_order(i);
-}
+// for(i = 1; i < 500; i++){
+//   db.temp_order(i);
+// }
 // db.temp_data();
 // db.temp_order(10);
 // view engine setup

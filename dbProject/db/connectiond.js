@@ -167,11 +167,11 @@ var rootConnection = mysql.createConnection({
     var item = [];
     var quary = "SELECT * from items where item_id = "+ itemid +";";
     var val = 0;
+    var temp = "SELECT * from buyers where buyer_id > "+ getRandomInt(1000);
     rootConnection.query( quary, function (err, result) {
       if (err) throw err;
       item =  result[0];
       var seller_id = item.seller_id;
-      var temp = "SELECT * from buyers where buyer_id > "+ getRandomInt(1000);
       rootConnection.query( temp, function (err, result) {
         if (err) throw err;
         buyer_id = result[0].buyer_id;
