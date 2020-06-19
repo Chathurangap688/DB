@@ -1,4 +1,5 @@
 var create_tables = require('./create_tables');
+var user_action = require('./user');
 var randomstring = require("randomstring");
 var mysql = require('mysql');
 var rootConnection = mysql.createConnection({
@@ -7,6 +8,8 @@ var rootConnection = mysql.createConnection({
     password: "",
     database: "mydb"
   });
+
+
   function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
@@ -75,7 +78,48 @@ var rootConnection = mysql.createConnection({
     }); 
   },
   init_users(){
-    console.log("crate users");
+    user_action
+    rootConnection.query( user_action.create_admin, function (err, result) {
+      if (err) throw err;
+      console.log("create admin database user");
+      rootConnection.query( user_action.grant_admin_Privilege, function (err, result) {
+        if (err) throw err;
+        console.log("grant_admin_Privilege");
+      });
+    });
+    rootConnection.query( user_action.create_application_user, function (err, result) {
+      if (err) throw err;
+      console.log("create application user database user");
+      rootConnection.query( user_action.grant_application_user_Privilege1, function (err, result) {
+        if (err) throw err;
+        rootConnection.query( user_action.grant_application_user_Privilege2, function (err, result) {
+          if (err) throw err;
+          rootConnection.query( user_action.grant_application_user_Privilege3, function (err, result) {
+            if (err) throw err;
+            rootConnection.query( user_action.grant_application_user_Privilege4, function (err, result) {
+              if (err) throw err;
+              rootConnection.query( user_action.grant_application_user_Privilege5, function (err, result) {
+                if (err) throw err;
+                rootConnection.query( user_action.grant_application_user_Privilege6, function (err, result) {
+                  if (err) throw err;
+                  console.log("grant_application_user_Privilege6");
+                });
+              });
+            });
+          });
+        });
+        
+      });
+    });
+    rootConnection.query( user_action.create_guest_user, function (err, result) {
+      if (err) throw err;
+      console.log("create guest user database user");
+      rootConnection.query( user_action.grant_guest_user_Privilege, function (err, result) {
+        if (err) throw err;
+        console.log("grant_guest_user_Privilege");
+      });
+    });
+
   },
   temp_data(){
     var first_name = randomstring.generate(5);
@@ -219,6 +263,12 @@ var rootConnection = mysql.createConnection({
       
     });
     
+  },
+  create_users(){
+    rootConnection.query( passwordq, function (err, result) {
+      if (err) throw err;
+      console.log("add password  account");
+    }); 
   }
  } 
  

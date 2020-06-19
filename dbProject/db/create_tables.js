@@ -37,6 +37,8 @@ exports.items = "CREATE TABLE if not exists "
     + " item_name VARCHAR(50),"
     + " discription VARCHAR(500),"
     + " seller_id int(11),"
+    + " category int(2),"
+    + " item_status int(2),"
     + " add_date DATETIME,"
     + " exp_date DATETIME,"
     + " available_quntity DECIMAL(10,2),"
@@ -49,7 +51,6 @@ exports.bankAccounts = "CREATE TABLE if not exists "
     + " user_id int(11),"
     + " balance DECIMAL(10,2),"
     + " FOREIGN KEY (user_id) REFERENCES user(user_id)); ";
-
 
 exports.orders = "CREATE TABLE if not exists "
     + " orders " 
