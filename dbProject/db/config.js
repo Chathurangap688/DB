@@ -13,6 +13,14 @@ var rootConnection = mysql.createConnection({
   function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
+  function create_index(index_name,table,column,dbname){
+    quary = "CREATE INDEX " + index_name + " ON "+ dbname +"."+ table +"("+ column +");";
+    rootConnection.query( quary, function (err, result) {
+      if (err) throw err;
+      console.log(quary);
+      console.log("create index :" + index_name);
+    });
+  }
   function getbanckaccbyid(id){
     var qury = "SELECT * from bank_accounts where user_id = "+ id + ";";
     var val = 0;
@@ -264,11 +272,9 @@ var rootConnection = mysql.createConnection({
     });
     
   },
-  create_users(){
-    rootConnection.query( passwordq, function (err, result) {
-      if (err) throw err;
-      console.log("add password  account");
-    }); 
+  init_index(){
+    create_index("user_bank_acc","bank_accounts","user_id","mydb");
+    create_index("user_name_index","user","user_name","mydb");
   }
  } 
  
